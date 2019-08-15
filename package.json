@@ -1,0 +1,22 @@
+{
+  "name": "tag-packages",
+  "version": "0.0.0",
+  "description": "Tag (or branch) monorepo packages for prerelease consumption",
+  "bin": "tag-packages.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kellyselden/tag-packages.git"
+  },
+  "keywords": [
+    "monorepo"
+  ],
+  "author": "Kelly Selden",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kellyselden/tag-packages/issues"
+  },
+  "homepage": "https://github.com/kellyselden/tag-packages#readme",
+  "engines": {
+    "node": ">=8.10"
+  }
+}
