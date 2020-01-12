@@ -1,6 +1,6 @@
 {
   "name": "tag-packages",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tag (or branch) monorepo packages for prerelease consumption",
   "bin": "tag-packages.js",
   "repository": {
