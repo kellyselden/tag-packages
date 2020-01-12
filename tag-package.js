@@ -6,6 +6,7 @@ const cp = require('child_process');
 const { promisify } = require('util');
 const _exec = promisify(cp.exec);
 const writeFile = promisify(fs.writeFile);
+const readdir = promisify(fs.readdir);
 
 const refType = process.env.REF_TYPE || 'tag';
 const shouldOnlyRemove = !!process.env.REMOVE_ONLY;
@@ -24,6 +25,17 @@ async function getCheckedOutBranchName() {
   let str = await exec('git symbolic-ref --short HEAD');
 
   return str.replace(/\r?\n/g, '');
+}
+
+async function move(packageDir) {
+  if (process.platform === 'win32') {
+    // Globs don't work in Windows.
+    for (let file of await readdir(packageDir)) {
+      await exec(`git mv ${packageDir}/${file} .`);
+    }
+  } else {
+    await exec(`git mv ${packageDir}/* .`);
+  }
 }
 
 async function tagPackage(packageDir, refName, siblingRefs) {
@@ -80,7 +92,7 @@ async function tagPackage(packageDir, refName, siblingRefs) {
       await exec('git clean -fdx');
       shouldDiscardChanges = false;
 
-      await exec(`git mv ${packageDir}/* .`);
+      await move(packageDir);
       shouldUnstageChanges = true;
 
       await exec(`git commit -m "${refName}"`);
